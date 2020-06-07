@@ -1,0 +1,152 @@
+<html>
+
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="javascript_compressed.js"></script>
+    <script src="msg/js/en.js"></script>
+    
+    <script src="circle.js"></script>
+    
+    <style>
+      html, body {
+         max-width: 100%;
+         overflow-x: hidden;
+     }
+       #draw-div, #blockly-div{
+         width:100px;
+         height:100px;
+         margin-left: 20px;
+         margin-right:10px;
+         float:left;
+         margin-top: 50px;
+     }
+     .button-div{
+         float: right;
+         margin-top: 550px;
+         margin-right: 20px;
+         margin-bottom: 50px;
+     }
+     .button {
+       background-color: royalblue; /* Green */
+       border: none;
+       color: white;
+       padding: 15px 32px;
+       text-align: center;
+       text-decoration: none;
+       display: inline-block;
+       font-size: 16px;
+     }
+     /****  Variables  ****/
+     /****  Base  ****/
+     * {
+       box-sizing: border-box;
+       margin: 0;
+       padding: 0;
+     }
+     body {
+       background: #efefef;
+       font-family: arial;
+       font-size: 18px;
+     }
+    
+       
+     .logodiv {
+         padding-left: 20px;
+         padding-top: 13px;
+         width: 100%;
+         height: 145px;
+         margin-left: 40%;
+     }
+     #sc2logo {
+       position: absolute;
+       top: 4px;
+       left: 16px;
+       padding-left: 20px;
+         padding-top: 13px;
+     }
+     
+     #logo {
+         max-width: 265px;
+         max-height: 100%;
+         width: 100%;
+         height: 100%;
+     }
+     
+     </style>
+     
+    
+     
+
+<div id="blockly-div" style="height: 480px; width: 600px;"></div>
+<div class="button-div">        
+ 
+  <button class="button" onclick="runCode()">Run</button>
+</div>
+
+      <body>
+       <div id="draw-div">
+      <canvas id="canvaspad" width="600" height="480" style="border:1px solid #030303; background: white;" >
+        Your browser does not support the HTML5 canvas tag.</canvas></div>
+       </body> 
+
+       <xml xmlns="https://developers.google.com/blockly/xml" id="workspaceBlocks" style="display: none"></xml>
+       <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+        <category name="Circle">
+          <block type="draw_circle"></block>
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </category>
+      </xml>
+
+<script>
+
+/* TODO: Change toolbox XML ID if necessary. Can export toolbox XML from Workspace Factory. */
+var toolbox = document.getElementById("toolbox");
+
+var options = { 
+	toolbox : toolbox, 
+	collapse : true, 
+	comments : true, 
+	disable : true, 
+	maxBlocks : Infinity, 
+	trashcan : true, 
+	horizontalLayout : false, 
+	toolboxPosition : 'start', 
+	css : true, 
+	media : 'https://blockly-demo.appspot.com/static/media/', 
+	rtl : false, 
+	scrollbars : true, 
+	sounds : true, 
+	oneBasedIndex : true
+};
+
+/* Inject your workspace */ 
+var workspace = Blockly.inject('blockly-div', options);
+
+/* Load Workspace Blocks from XML to workspace. Remove all code below if no blocks to load */
+
+/* TODO: Change workspace blocks XML ID if necessary. Can export workspace blocks XML from Workspace Factory. */
+var workspaceBlocks = document.getElementById("workspaceBlocks"); 
+
+/* Load blocks to workspace. */
+Blockly.Xml.domToWorkspace(workspaceBlocks, workspace);
+  
+function runCode()
+{
+    console.log("called");
+  
+	window.LoopTrap = 1000;
+	Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinity loop";\n'
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    eval(code);
+  Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+  
+}
+
+
+</script>
+
+
+
+</html>
